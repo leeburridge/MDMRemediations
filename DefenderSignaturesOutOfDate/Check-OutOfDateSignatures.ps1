@@ -5,9 +5,6 @@ if ($service.Status -ne "Running") {
     exit 1
 }
 
-# Get the Windows Defender definitions
-$mpDefs = Get-MpPreference | Select-Object -ExpandProperty SignatureDefinitions
-
 # Check if the definitions are up to date
 $status = Get-MpComputerStatus
 
