@@ -9,10 +9,16 @@ if ($service.Status -ne "Running") {
 $mpDefs = Get-MpPreference | Select-Object -ExpandProperty SignatureDefinitions
 
 # Check if the definitions are up to date
-if ($mpDefs.SignatureOutOfDate) {
-    # Return non-zero exit code if the definitions are out of date
+$status = Get-MpComputerStatus
+
+# Check if the definitions are up to date
+if ($status.AntivirusSignatureAge -gt 1) {
+    Write-Output "The definitions are out of date."
     exit 1
+} else {
+    Write-Output "The definitions are up to date."
 }
+
 
 # Return zero exit code if the definitions are up to date
 exit 0
